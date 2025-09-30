@@ -1,0 +1,29 @@
+# Unity should NOT be tracked
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Cc]rashReports/
+*.pidb
+*.booproj
+*.svd
+*.user
+*.userprefs
+*.unitypackage
+*.tmp
+*.bak
+.DS_Store
+.vs/
+.idea/
+*.csproj
+*.sln
+*.suo
+
+# Keep these tracked
+!Assets/
+!Packages/
+!ProjectSettings/
