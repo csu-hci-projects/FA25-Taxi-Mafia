@@ -1,5 +1,6 @@
 # Unity should NOT be tracked
 [Ll]ibrary/
+[Aa]ssets/ARCADE - FREE Racing Car/
 [Tt]emp/
 [Oo]bj/
 [Bb]uild/
@@ -24,6 +25,95 @@
 *.suo
 
 # Keep these tracked
-!Assets/
 !Packages/
 !ProjectSettings/
+Assets/ARCADE - FREE Racing Car/Materials.meta
+Assets/ARCADE - FREE Racing Car/Materials/AFRC_Emission.mat
+Assets/ARCADE - FREE Racing Car/Materials/AFRC_Emission.mat.meta
+Assets/ARCADE - FREE Racing Car/Materials/AFRC_Env_Mat.mat
+Assets/ARCADE - FREE Racing Car/Materials/AFRC_Env_Mat.mat.meta
+Assets/ARCADE - FREE Racing Car/Materials/Color Variations.meta
+Assets/ARCADE - FREE Racing Car/Materials/Color Variations/AFRC_Mat_Col1.mat
+Assets/ARCADE - FREE Racing Car/Materials/Color Variations/AFRC_Mat_Col1.mat.meta
+Assets/ARCADE - FREE Racing Car/Materials/Color Variations/AFRC_Mat_Col2.mat
+Assets/ARCADE - FREE Racing Car/Materials/Color Variations/AFRC_Mat_Col2.mat.meta
+Assets/ARCADE - FREE Racing Car/Materials/Color Variations/AFRC_Mat_Col3.mat
+Assets/ARCADE - FREE Racing Car/Materials/Color Variations/AFRC_Mat_Col3.mat.meta
+Assets/ARCADE - FREE Racing Car/Materials/Color Variations/AFRC_Mat_Col4.mat
+Assets/ARCADE - FREE Racing Car/Materials/Color Variations/AFRC_Mat_Col4.mat.meta
+Assets/ARCADE - FREE Racing Car/Materials/Color Variations/AFRC_Mat_Col5.mat
+Assets/ARCADE - FREE Racing Car/Materials/Color Variations/AFRC_Mat_Col5.mat.meta
+Assets/ARCADE - FREE Racing Car/Meshes.meta
+Assets/ARCADE - FREE Racing Car/Meshes/ARCADE - FREE Racing Car.fbx
+Assets/ARCADE - FREE Racing Car/Meshes/ARCADE - FREE Racing Car.fbx.meta
+Assets/ARCADE - FREE Racing Car/Meshes/Road.fbx
+Assets/ARCADE - FREE Racing Car/Meshes/Road.fbx.meta
+Assets/ARCADE - FREE Racing Car/Prefabs (Meshes Only).meta
+Assets/ARCADE - FREE Racing Car/Prefabs (Meshes Only)/Free Racing Car Blue Variant.prefab
+Assets/ARCADE - FREE Racing Car/Prefabs (Meshes Only)/Free Racing Car Blue Variant.prefab.meta
+Assets/ARCADE - FREE Racing Car/Prefabs (Meshes Only)/Free Racing Car Gray Variant.prefab
+Assets/ARCADE - FREE Racing Car/Prefabs (Meshes Only)/Free Racing Car Gray Variant.prefab.meta
+Assets/ARCADE - FREE Racing Car/Prefabs (Meshes Only)/Free Racing Car Purple Variant.prefab
+Assets/ARCADE - FREE Racing Car/Prefabs (Meshes Only)/Free Racing Car Purple Variant.prefab.meta
+Assets/ARCADE - FREE Racing Car/Prefabs (Meshes Only)/Free Racing Car Red Variant.prefab
+Assets/ARCADE - FREE Racing Car/Prefabs (Meshes Only)/Free Racing Car Red Variant.prefab.meta
+Assets/ARCADE - FREE Racing Car/Prefabs (Meshes Only)/Free Racing Car.prefab
+Assets/ARCADE - FREE Racing Car/Prefabs (Meshes Only)/Free Racing Car.prefab.meta
+Assets/ARCADE - FREE Racing Car/Prefabs (With Colliders).meta
+Assets/ARCADE - FREE Racing Car/Prefabs (With Colliders)/Free Racing Car Blue Variant.prefab
+Assets/ARCADE - FREE Racing Car/Prefabs (With Colliders)/Free Racing Car Blue Variant.prefab.meta
+Assets/ARCADE - FREE Racing Car/Prefabs (With Colliders)/Free Racing Car Gray Variant.prefab
+Assets/ARCADE - FREE Racing Car/Prefabs (With Colliders)/Free Racing Car Gray Variant.prefab.meta
+Assets/ARCADE - FREE Racing Car/Prefabs (With Colliders)/Free Racing Car Purple Variant.prefab
+Assets/ARCADE - FREE Racing Car/Prefabs (With Colliders)/Free Racing Car Purple Variant.prefab.meta
+Assets/ARCADE - FREE Racing Car/Prefabs (With Colliders)/Free Racing Car Red Variant.prefab
+Assets/ARCADE - FREE Racing Car/Prefabs (With Colliders)/Free Racing Car Red Variant.prefab.meta
+Assets/ARCADE - FREE Racing Car/Prefabs (With Colliders)/Free Racing Car.prefab
+Assets/ARCADE - FREE Racing Car/Prefabs (With Colliders)/Free Racing Car.prefab.meta
+Assets/ARCADE - FREE Racing Car/Scenes.meta
+Assets/ARCADE - FREE Racing Car/Scenes/Day.unity
+Assets/ARCADE - FREE Racing Car/Scenes/Day.unity.meta
+Assets/ARCADE - FREE Racing Car/Scenes/More cars.png
+Assets/ARCADE - FREE Racing Car/Scenes/More cars.png.meta
+Assets/ARCADE - FREE Racing Car/Scenes/Night.unity
+Assets/ARCADE - FREE Racing Car/Scenes/Night.unity.meta
+Assets/ARCADE - FREE Racing Car/Scenes/Post Processing.meta
+Assets/ARCADE - FREE Racing Car/Scenes/Post Processing/AFRC Volume Profile.asset
+Assets/ARCADE - FREE Racing Car/Scenes/Post Processing/AFRC Volume Profile.asset.meta
+Assets/ARCADE - FREE Racing Car/Skybox.meta
+Assets/ARCADE - FREE Racing Car/Skybox/Day.meta
+Assets/ARCADE - FREE Racing Car/Skybox/Day/Day Skybox.mat
+Assets/ARCADE - FREE Racing Car/Skybox/Day/Day Skybox.mat.meta
+Assets/ARCADE - FREE Racing Car/Skybox/Day/Textures.meta
+Assets/ARCADE - FREE Racing Car/Skybox/Day/Textures/Bottom.png
+Assets/ARCADE - FREE Racing Car/Skybox/Day/Textures/Bottom.png.meta
+Assets/ARCADE - FREE Racing Car/Skybox/Day/Textures/Middle.png
+Assets/ARCADE - FREE Racing Car/Skybox/Day/Textures/Middle.png.meta
+Assets/ARCADE - FREE Racing Car/Skybox/Day/Textures/Top.png
+Assets/ARCADE - FREE Racing Car/Skybox/Day/Textures/Top.png.meta
+Assets/ARCADE - FREE Racing Car/Skybox/Night.meta
+Assets/ARCADE - FREE Racing Car/Skybox/Night/Night Skybox.mat
+Assets/ARCADE - FREE Racing Car/Skybox/Night/Night Skybox.mat.meta
+Assets/ARCADE - FREE Racing Car/Skybox/Night/Textures.meta
+Assets/ARCADE - FREE Racing Car/Skybox/Night/Textures/Bottom.png
+Assets/ARCADE - FREE Racing Car/Skybox/Night/Textures/Bottom.png.meta
+Assets/ARCADE - FREE Racing Car/Skybox/Night/Textures/Middle.png
+Assets/ARCADE - FREE Racing Car/Skybox/Night/Textures/Middle.png.meta
+Assets/ARCADE - FREE Racing Car/Skybox/Night/Textures/Top.png
+Assets/ARCADE - FREE Racing Car/Skybox/Night/Textures/Top.png.meta
+Assets/ARCADE - FREE Racing Car/Textures.meta
+Assets/ARCADE - FREE Racing Car/Textures/AFRC_Env_Mat.png
+Assets/ARCADE - FREE Racing Car/Textures/AFRC_Env_Mat.png.meta
+Assets/ARCADE - FREE Racing Car/Textures/AFRC_Tex_Emission.png
+Assets/ARCADE - FREE Racing Car/Textures/AFRC_Tex_Emission.png.meta
+Assets/ARCADE - FREE Racing Car/Textures/Color Variations.meta
+Assets/ARCADE - FREE Racing Car/Textures/Color Variations/AFRC_Tex_Col1.png
+Assets/ARCADE - FREE Racing Car/Textures/Color Variations/AFRC_Tex_Col1.png.meta
+Assets/ARCADE - FREE Racing Car/Textures/Color Variations/AFRC_Tex_Col2.png
+Assets/ARCADE - FREE Racing Car/Textures/Color Variations/AFRC_Tex_Col2.png.meta
+Assets/ARCADE - FREE Racing Car/Textures/Color Variations/AFRC_Tex_Col3.png
+Assets/ARCADE - FREE Racing Car/Textures/Color Variations/AFRC_Tex_Col3.png.meta
+Assets/ARCADE - FREE Racing Car/Textures/Color Variations/AFRC_Tex_Col4.png
+Assets/ARCADE - FREE Racing Car/Textures/Color Variations/AFRC_Tex_Col4.png.meta
+Assets/ARCADE - FREE Racing Car/Textures/Color Variations/AFRC_Tex_Col5.png
+Assets/ARCADE - FREE Racing Car/Textures/Color Variations/AFRC_Tex_Col5.png.meta
