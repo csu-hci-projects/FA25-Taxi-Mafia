@@ -83,8 +83,6 @@ public class CarController : MonoBehaviour
         {
             moveInput = Input.GetAxis("Vertical");
             steerInput = Input.GetAxis("Horizontal");
-            Debug.Log("moveInput: " + moveInput);
-            Debug.Log("steerInput: " + steerInput);
         }
     }
 
