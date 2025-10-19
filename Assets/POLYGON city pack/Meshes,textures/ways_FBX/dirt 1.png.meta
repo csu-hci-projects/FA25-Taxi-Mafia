@@ -1,12 +1,5 @@
 fileFormatVersion: 2
-guid: d90409e4a3fae7f46bbf0450da252846
-AssetOrigin:
-  serializedVersion: 1
-  productId: 107224
-  packageName: CITY package
-  packageVersion: 1.0
-  assetPath: Assets/POLYGON city pack/Meshes,textures/ways_FBX/dirt.png
-  uploadId: 658773
+guid: 3985c8f6002069875896dc522f203b6d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -14,7 +7,7 @@ TextureImporter:
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
-    sRGBTexture: 0
+    sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -61,7 +54,7 @@ TextureImporter:
   alphaUsage: 1
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
-  textureType: 1
+  textureType: 0
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
