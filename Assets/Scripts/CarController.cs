@@ -112,7 +112,7 @@ public class CarController : MonoBehaviour
         {
             foreach (var wheel in wheels)
             {
-                wheel.wheelCollider.brakeTorque = 300 * brakeAcceleration * Time.deltaTime;
+                wheel.wheelCollider.brakeTorque = 1000000 * brakeAcceleration * Time.deltaTime;
             }
 
             // carLights.isBackLightOn = true;
