@@ -66,5 +66,5 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "FA25-Taxi-Mafia-Real.sln"
+    "dotnet.defaultSolution": "FA25-Taxi-Mafia.sln"
 }
