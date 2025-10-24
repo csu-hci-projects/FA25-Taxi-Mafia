@@ -1876,7 +1876,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7192257827413971766, guid: 39733567fc8784299a2deb977fefc2ea, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 350
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 7192257827413971766, guid: 39733567fc8784299a2deb977fefc2ea, type: 3}
       propertyPath: m_SizeDelta.y
@@ -2443,7 +2443,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7192257827413971766, guid: 39733567fc8784299a2deb977fefc2ea, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 350
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 7192257827413971766, guid: 39733567fc8784299a2deb977fefc2ea, type: 3}
       propertyPath: m_SizeDelta.y
@@ -2549,7 +2549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7192257827413971766, guid: 39733567fc8784299a2deb977fefc2ea, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 350
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 7192257827413971766, guid: 39733567fc8784299a2deb977fefc2ea, type: 3}
       propertyPath: m_SizeDelta.y
@@ -3024,7 +3024,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7192257827413971766, guid: 39733567fc8784299a2deb977fefc2ea, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 350
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 7192257827413971766, guid: 39733567fc8784299a2deb977fefc2ea, type: 3}
       propertyPath: m_SizeDelta.y
@@ -3077,6 +3077,14 @@ PrefabInstance:
     - target: {fileID: 7192257827413971766, guid: 39733567fc8784299a2deb977fefc2ea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8926464266468779624, guid: 39733567fc8784299a2deb977fefc2ea, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8926464266468779624, guid: 39733567fc8784299a2deb977fefc2ea, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: 97690656
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
