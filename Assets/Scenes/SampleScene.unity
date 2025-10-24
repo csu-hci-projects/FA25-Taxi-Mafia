@@ -2130,7 +2130,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 465002666224773651, guid: 39733567fc8784299a2deb977fefc2ea, type: 3}
       propertyPath: m_Name
-      value: Exit
+      value: Notes
       objectReference: {fileID: 0}
     - target: {fileID: 602468729622491110, guid: 39733567fc8784299a2deb977fefc2ea, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -2202,7 +2202,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7192257827413971766, guid: 39733567fc8784299a2deb977fefc2ea, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 185.27661
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7192257827413971766, guid: 39733567fc8784299a2deb977fefc2ea, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2242,7 +2242,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8926464266468779624, guid: 39733567fc8784299a2deb977fefc2ea, type: 3}
       propertyPath: m_text
-      value: 'Exit
+      value: 'Notes
 
 '
       objectReference: {fileID: 0}
