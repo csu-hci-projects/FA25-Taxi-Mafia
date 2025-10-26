@@ -147,7 +147,7 @@ WheelCollider:
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.5
     m_AsymptoteValue: 0.75
-    m_Stiffness: 1
+    m_Stiffness: 1.5
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -878,8 +878,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8501213704254055768}
   serializedVersion: 5
-  m_Mass: 1500
-  m_LinearDamping: 0
+  m_Mass: 1000
+  m_LinearDamping: 0.1
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -910,11 +910,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   control: 0
-  maxAcceleration: 50
-  brakeAcceleration: 50
+  maxAcceleration: 200
+  brakeAcceleration: 100
   turnSensitivity: 1
   maxSteerAngle: 30
-  _centerOfMass: {x: 0, y: 0, z: 0}
+  _centerOfMass: {x: 0, y: -0.25, z: 0}
   wheels:
   - wheelModel: {fileID: 6784361125287519540}
     wheelCollider: {fileID: 2968104560904373872}
