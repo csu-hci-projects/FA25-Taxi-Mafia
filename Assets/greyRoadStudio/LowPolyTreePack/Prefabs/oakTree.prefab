@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 33989385991057262}
   - component: {fileID: 23890990353640460}
   - component: {fileID: 64004332394335928}
+  - component: {fileID: 6517929458725978580}
   m_Layer: 0
   m_Name: oakTree
   m_TagString: Untagged
@@ -110,3 +111,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: ccafc2ea8bec52841ac2b9fd34238310, type: 3}
+--- !u!136 &6517929458725978580
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377331622712542}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7
+  m_Height: 13.187584
+  m_Direction: 1
+  m_Center: {x: 0.2, y: 6.5933123, z: 0}
