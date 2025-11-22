@@ -7,14 +7,14 @@ public class MissionTriggerScript : MonoBehaviour
 
     [SerializeField] private GameObject passenger;
     AnimatorControllerDriver animatorControllerDriver;
-    public MissionLogic missionLogic;
-    [SerializeField] private float walkOutDistance = 2f;
-    [SerializeField] private float walkOutDuration = 2f;
-    [SerializeField] private bool deactivateOnFinish = true;
+    MissionLogic missionLogic;
+    private float walkOutDistance = 2f;
+    private float walkOutDuration = 2f;
+
     // How slow the car must be (magnitude) to be considered stopped
-    public float stopThreshold = 0.1f;
+    private float stopThreshold = 0.1f;
     // How long (seconds) the car must remain below stopThreshold while inside the trigger
-    public float holdTime = 0.5f;
+    private float holdTime = 0.5f;
 
     // Reference to the shared StopMonitor (can be on this object or a child)
     private StopMonitor stopMonitor;
@@ -24,6 +24,8 @@ public class MissionTriggerScript : MonoBehaviour
         animatorControllerDriver = passenger.GetComponent<AnimatorControllerDriver>();
         if (animatorControllerDriver == null)
             Debug.LogError("Animator not found on " + gameObject.name);
+
+        missionLogic = FindAnyObjectByType<MissionLogic>();
     }
 
     // Called once when another collider enters this trigger
@@ -40,10 +42,12 @@ public class MissionTriggerScript : MonoBehaviour
 
     private void StartMission(Collider other)
     {
-        missionLogic.StartMission(other);
-        StartCoroutine(PassengerEnterCarCoroutine(walkOutDistance, walkOutDuration));
-        // freeze position of collider 'other' during walkout duration
-        StartCoroutine(FreezeRigidbodyConstraintsCoroutine(other, walkOutDuration));
+        if (missionLogic.StartMission(passenger))
+        {
+            StartCoroutine(PassengerEnterCarCoroutine(walkOutDistance, walkOutDuration));
+            // freeze position of collider 'other' during walkout duration
+            StartCoroutine(FreezeRigidbodyConstraintsCoroutine(other, walkOutDuration));
+        }
     }
 
     private IEnumerator FreezeRigidbodyConstraintsCoroutine(Collider other, float duration)
@@ -85,8 +89,8 @@ public class MissionTriggerScript : MonoBehaviour
                 yield return null;
             }
 
-            // Make passenger disappear
-            passenger.SetActive(false);
+            // Make passenger invisible (keep GameObject active so scripts keep running)
+            missionLogic.SetPassengerVisibility(false);
         }
     }
 
