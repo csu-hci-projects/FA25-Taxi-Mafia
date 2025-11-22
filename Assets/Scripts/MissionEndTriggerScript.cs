@@ -1,13 +1,21 @@
 using UnityEngine;
+using System.Collections;
+using Unity.VisualScripting;
 
 public class MissionEndTriggerScript : MonoBehaviour
 {
 
-    public MissionLogic missionLogic;
+    MissionLogic missionLogic;
+
     public float stopThreshold = 0.1f;
     public float holdTime = 0.5f;
 
     private StopMonitor stopMonitor;
+
+    void Awake()
+    {
+        missionLogic = FindAnyObjectByType<MissionLogic>();
+    }
 
     // Called once when another collider enters this trigger
     private void OnTriggerEnter(Collider other)
@@ -16,8 +24,14 @@ public class MissionEndTriggerScript : MonoBehaviour
         if (other.CompareTag("PlayerCar"))
         {
             if (stopMonitor == null) stopMonitor = GetComponentInChildren<StopMonitor>() ?? gameObject.AddComponent<StopMonitor>();
-            stopMonitor.StartMonitoring(other, stopThreshold, holdTime, (c) => missionLogic.EndMission(c));
+            stopMonitor.StartMonitoring(other, stopThreshold, holdTime, (c) => EndMission(c));
         }
+    }
+
+    private void EndMission(Collider other)
+    {
+        missionLogic.EndMission(other);
+        this.gameObject.SetActive(false);
     }
 
     private void OnTriggerExit(Collider other)
