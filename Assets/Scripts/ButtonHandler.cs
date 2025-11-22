@@ -7,7 +7,8 @@ public class ButtonHandler : MonoBehaviour
     public void OnButtonClicked()
     {
         Debug.Log("Button Clicked!");
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("WorldMission");
+        Time.timeScale = 1f;
         // Add your desired actions here
     }
 }

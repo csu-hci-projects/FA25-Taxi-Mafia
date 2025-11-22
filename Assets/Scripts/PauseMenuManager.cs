@@ -13,7 +13,6 @@ public class PauseMenuManager : MonoBehaviour
         {
             pauseMenuContainer.SetActive(false);
         }
-        Time.timeScale = 1f;
     }
 
     void Update()
