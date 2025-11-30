@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class PauseMenuManager : MonoBehaviour
 {
     public GameObject pauseMenuContainer;
+    public GameObject taxiIcon;
     private bool isPaused = false;
 
     void Start()
@@ -12,6 +13,7 @@ public class PauseMenuManager : MonoBehaviour
         if (pauseMenuContainer != null)
         {
             pauseMenuContainer.SetActive(false);
+            taxiIcon.SetActive(false);
         }
     }
 
@@ -35,6 +37,7 @@ public class PauseMenuManager : MonoBehaviour
         if (pauseMenuContainer != null)
         {
             pauseMenuContainer.SetActive(true);
+            taxiIcon.SetActive(true);
         }
         Time.timeScale = 0f;
         isPaused = true;
@@ -48,6 +51,7 @@ public class PauseMenuManager : MonoBehaviour
         if (pauseMenuContainer != null)
         {
             pauseMenuContainer.SetActive(false);
+            taxiIcon.SetActive(false);
         }
         Time.timeScale = 1f;
         isPaused = false;
