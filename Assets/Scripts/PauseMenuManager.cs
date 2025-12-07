@@ -6,6 +6,9 @@ public class PauseMenuManager : MonoBehaviour
 {
     public GameObject pauseMenuContainer;
     public GameObject taxiIcon;
+    public GameObject girlNPCIcon;
+    public GameObject bossNPCIcon;
+    public GameObject demonNPCIcon;
     private bool isPaused = false;
 
     void Start()
@@ -14,6 +17,9 @@ public class PauseMenuManager : MonoBehaviour
         {
             pauseMenuContainer.SetActive(false);
             taxiIcon.SetActive(false);
+            girlNPCIcon.SetActive(false);
+            bossNPCIcon.SetActive(false);
+            demonNPCIcon.SetActive(false);
         }
     }
 
@@ -38,6 +44,9 @@ public class PauseMenuManager : MonoBehaviour
         {
             pauseMenuContainer.SetActive(true);
             taxiIcon.SetActive(true);
+            girlNPCIcon.SetActive(true);
+            bossNPCIcon.SetActive(true);
+            demonNPCIcon.SetActive(true);
         }
         Time.timeScale = 0f;
         isPaused = true;
@@ -52,6 +61,9 @@ public class PauseMenuManager : MonoBehaviour
         {
             pauseMenuContainer.SetActive(false);
             taxiIcon.SetActive(false);
+            girlNPCIcon.SetActive(false);
+            bossNPCIcon.SetActive(false);
+            demonNPCIcon.SetActive(false);
         }
         Time.timeScale = 1f;
         isPaused = false;
