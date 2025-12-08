@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using System;
 using System.Collections.Generic;
@@ -34,7 +33,7 @@ public class CarController : MonoBehaviour
     public float brakeAcceleration = 50.0f;
 
     public float turnSensitivity = 0.75f;
-    public float maxSteerAngle = 30.0f;
+    public float maxSteerAngle = 45.0f;
 
     public Vector3 _centerOfMass;
 
@@ -43,22 +42,27 @@ public class CarController : MonoBehaviour
     float moveInput;
     float steerInput;
 
-    private Rigidbody carRb;
+    public Rigidbody carRb;
 
     [Header("Engine Settings")]
-    public float engineTorque = 800f;       // Nm, base torque
-    public float maxRPM = 6000f;            // max engine revs
+    public float engineTorque = 1000f;       // Nm, base torque
+    public float maxRPM = 6500f;            // max engine revs
     public float idleRPM = 800f;            // idle RPM
-    public float[] gearRatios = { 3.2f, 2.1f, 1.5f, 1.0f, 0.8f }; // 5 gears
+    public float[] gearRatios = { 3.2f, 2.1f, 1.5f, 1.0f, 0.8f}; // 5 gears
     public bool reversing = false;
-    public float finalDrive = 3.7f;         // differential ratio
-    public float shiftUpRPM = 6500f;        // shift points
+    public float finalDrive = 3.73f;         // differential ratio
+    public float shiftUpRPM = 5000f;        // shift points
     public float shiftDownRPM = 2500f;
+    private float wheelRadius = 15.0f;
 
-    private int currentGear = 1;            // start in 1st gear
-    private float currentRPM;
+    [Header("Engine State")]
+    public bool engineRunning = true;   // You can turn this on/off later
+    public float currentRPM;
+    public int currentGear = 1;            // start in 1st gear
     private float throttleInputSmooth;
+    
     private float previousSteerInput = 0f;
+    public bool lookBack = false;
 
     [Header("Audio")]
     public AudioSource engineAudio;
@@ -72,7 +76,7 @@ public class CarController : MonoBehaviour
         SetupCarPhysics();
         carRb.centerOfMass = _centerOfMass;
         // --- Rigidbody setup for stability ---
-        carRb.mass = 1350f;                        // typical sedan/muscle car
+        carRb.mass = 1150f;                        // typical sedan/muscle car
         carRb.linearDamping = 0.1f;
         carRb.angularDamping = 0.5f;
         carRb.interpolation = RigidbodyInterpolation.Interpolate;
@@ -167,6 +171,23 @@ public class CarController : MonoBehaviour
 
     void GetInputs()
     {
+        // Steering stays normal
+        float steer = Input.GetAxis("Horizontal");
+
+        // Forward movement only from W
+        float accel = 0f;
+
+        if (Input.GetKey(KeyCode.W)) accel = 1f;
+        if (Input.GetKey(KeyCode.S)) lookBack = true;
+        else lookBack = false;
+
+        // Reverse only if reverse key explicitly pressed (ex: LeftShift or R)
+        if (Input.GetKey(KeyCode.LeftShift))
+            accel = -1f;
+
+        // store accel for physics
+        moveInput = accel;
+
         if (control == ControlMode.Keyboard)
         {
             moveInput = Input.GetAxis("Vertical");
@@ -251,6 +272,19 @@ void Move()
             wheel.wheelCollider.motorTorque = 0f;
         }
     }
+
+    if (!reversing)
+    {
+        // Calculate forward RPM based on wheel speed and gear ratio
+        float wheelRPM = (carRb.linearVelocity.magnitude / wheelRadius) * 60f;
+        float targetRPM = wheelRPM * gearRatio * 2f;  // adjust factor as needed
+
+        currentRPM = Mathf.Lerp(currentRPM, targetRPM, Time.fixedDeltaTime * 5f);
+
+        // Clamp RPM so it behaves like a real car
+        currentRPM = Mathf.Clamp(currentRPM, idleRPM, maxRPM);
+    }
+
 
     if (reversing)
     {
