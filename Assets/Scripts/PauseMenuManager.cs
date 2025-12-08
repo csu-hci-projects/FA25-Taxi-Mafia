@@ -9,6 +9,11 @@ public class PauseMenuManager : MonoBehaviour
     public GameObject girlNPCIcon;
     public GameObject bossNPCIcon;
     public GameObject demonNPCIcon;
+    public GameObject endZone1;
+    public GameObject endZone2;
+
+    public GameObject endZone3;
+
     private bool isPaused = false;
 
     void Start()
@@ -20,6 +25,9 @@ public class PauseMenuManager : MonoBehaviour
             girlNPCIcon.SetActive(false);
             bossNPCIcon.SetActive(false);
             demonNPCIcon.SetActive(false);
+            endZone1.SetActive(false);
+            endZone2.SetActive(false);
+            endZone3.SetActive(false);
         }
     }
 
@@ -47,6 +55,9 @@ public class PauseMenuManager : MonoBehaviour
             girlNPCIcon.SetActive(true);
             bossNPCIcon.SetActive(true);
             demonNPCIcon.SetActive(true);
+            endZone1.SetActive(true);
+            endZone2.SetActive(true);
+            endZone3.SetActive(true);
         }
         Time.timeScale = 0f;
         isPaused = true;
@@ -64,6 +75,9 @@ public class PauseMenuManager : MonoBehaviour
             girlNPCIcon.SetActive(false);
             bossNPCIcon.SetActive(false);
             demonNPCIcon.SetActive(false);
+            endZone1.SetActive(false);
+            endZone2.SetActive(false);
+            endZone3.SetActive(false);
         }
         Time.timeScale = 1f;
         isPaused = false;
