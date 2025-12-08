@@ -8,6 +8,7 @@ public class ForceExplosion : MonoBehaviour
     public float upwardsModifier = 0.5f;
 
     public GameObject explosionPrefab;
+    public GameObject miniMap;
 
     private bool exploded = false;
 
@@ -15,6 +16,8 @@ public class ForceExplosion : MonoBehaviour
     {
         if (exploded) return;
         exploded = true;
+
+        miniMap.SetActive(false);
 
         Vector3 explosionPoint = transform.position;
 
