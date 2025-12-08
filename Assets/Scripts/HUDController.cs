@@ -58,6 +58,13 @@ public class HUDManager : MonoBehaviour
       // EXPLODE THE CAR DIRECTLY
       if (explosion != null)
           explosion.Explode();
+      
+      // Notify RespawnManager about death
+      RespawnManager respawnManager = FindAnyObjectByType<RespawnManager>();
+      if (respawnManager != null)
+      {
+          respawnManager.OnPlayerDeath();
+      }
     }
   }
 }
