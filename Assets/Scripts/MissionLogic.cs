@@ -85,7 +85,7 @@ public class MissionLogic : MonoBehaviour
             missionText.text = "";
             int missionMoney = Random.Range(100, 500);
             currentMoney += missionMoney;
-            moneyText.text = currentMoney.ToString() + "$";
+            UpdateMoneyDisplay();
             // Restore passenger transform to the saved starting position/rotation
             currentPassenger.transform.position = startingPassengerPosition;
             currentPassenger.transform.rotation = startingPassengerRotation;
@@ -114,6 +114,29 @@ public class MissionLogic : MonoBehaviour
         {
             var em = ps.emission;
             em.enabled = visible;
+        }
+    }
+
+    public void DeductRespawnCost(int amount)
+    {
+        currentMoney -= amount;
+        UpdateMoneyDisplay();
+    }
+
+    private void UpdateMoneyDisplay()
+    {
+        if (moneyText == null) return;
+
+        moneyText.text = "$" + currentMoney.ToString();
+
+        // Change color to red if money is less than zero
+        if (currentMoney < 0)
+        {
+            moneyText.color = Color.red;
+        }
+        else
+        {
+            moneyText.color = Color.white; // Reset to white if money is positive
         }
     }
 }
