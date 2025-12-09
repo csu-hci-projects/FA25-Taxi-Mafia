@@ -63,6 +63,8 @@ public class CarController : MonoBehaviour
     
     private float previousSteerInput = 0f;
     public bool lookBack = false;
+    bool autoReverse = false;
+
 
     [Header("Audio")]
     public AudioSource engineAudio;
@@ -195,6 +197,17 @@ public class CarController : MonoBehaviour
             steerInput = Mathf.Lerp(previousSteerInput, Input.GetAxis("Horizontal"), Time.fixedDeltaTime * 5f);
             previousSteerInput = steerInput;
         }
+
+         // Steering
+        steerInput = Mathf.Lerp(previousSteerInput, Input.GetAxis("Horizontal"), Time.fixedDeltaTime * 5f);
+        previousSteerInput = steerInput;
+
+        // Forward / Reverse (S behaves like DownArrow)
+        moveInput = Input.GetAxis("Vertical");
+
+        // Auto reverse toggle (press R to enable/disable)
+        if (Input.GetKeyDown(KeyCode.R))
+            autoReverse = !autoReverse;
     }
 
     void UpdateEngineSound()
