@@ -5,9 +5,6 @@ using UnityEngine.InputSystem.Controls;
 
 public class MissionLogic : MonoBehaviour
 {
-
-    public TimerController timerController;
-    public TextMeshProUGUI missionText;
     public TextMeshProUGUI moneyText;
 
     [SerializeField] MissionEndzoneOrganizer missionEndzoneOrganizer;
@@ -83,9 +80,6 @@ public class MissionLogic : MonoBehaviour
             startingPassengerPosition = passenger.transform.position;
             startingPassengerRotation = passenger.transform.rotation;
             missionEndzoneOrganizer.GetRandomMissionEndzone().SetActive(true);
-            timerController.StopTimer();
-            timerController.StartTimer();
-            missionText.text = "To the liquor sto'!";
             missionRunning = true;
             return true;
         }
@@ -123,9 +117,7 @@ public class MissionLogic : MonoBehaviour
 
             animatorControllerDriver.CrossfadeTo("Idle", 0.1f, 0);
 
-            timerController.PauseTimer();
             missionRunning = false;
-            missionText.text = "";
             int missionMoney = Random.Range(100, 500);
             currentMoney += missionMoney;
             UpdateMoneyDisplay();
@@ -176,18 +168,6 @@ public class MissionLogic : MonoBehaviour
         if (!missionRunning) return;
 
         Debug.Log("[RESPAWN] Cancelling mission due to player death");
-        
-        // Stop the timer
-        if (timerController != null)
-        {
-            timerController.StopTimer();
-        }
-        
-        // Clear mission text
-        if (missionText != null)
-        {
-            missionText.text = "";
-        }
         
         // Deactivate all mission endzones
         if (missionEndzoneOrganizer != null)
