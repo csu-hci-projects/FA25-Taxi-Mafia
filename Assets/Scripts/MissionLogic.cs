@@ -23,6 +23,49 @@ public class MissionLogic : MonoBehaviour
 
     private bool missionRunning;
 
+    public Transform arrow;  // The arrow indicator
+    public GameObject car;
+
+    void Update()
+    {
+        var maybeEndzonePos = missionEndzoneOrganizer.GetActiveEndzonePosition();
+        if (!maybeEndzonePos.HasValue || car == null || arrow == null)
+        {
+            if (arrow != null && arrow.gameObject.activeSelf)
+                arrow.gameObject.SetActive(false);
+            return;
+        }
+
+        // Ensure arrow is visible while we update it
+        if (!arrow.gameObject.activeSelf)
+            arrow.gameObject.SetActive(true);
+
+        Vector3 endPos = maybeEndzonePos.Value;
+        Vector3 carPos = car.transform.position;
+
+        Debug.Log("car " + car.transform.position);
+
+
+        // Direction from car to endzone, flattened on the horizontal plane
+        Vector3 dir = endPos - carPos;
+
+        Debug.Log("dir " + dir);
+
+        dir.y = 0f;
+        if (dir.sqrMagnitude < 0.0001f)
+            return;
+
+        // Compute direction in the car's local space so 0 = forward
+        Vector3 localDir = Quaternion.Inverse(car.transform.rotation) * dir.normalized;
+
+        // Compute Z rotation so that: 0 = forward (up), 90 = left, 180 = back, 270 = right
+        float zAngle = Mathf.Atan2(-localDir.x, localDir.z) * Mathf.Rad2Deg;
+        zAngle = (zAngle + 360f) % 360f;
+
+        // Apply rotation only on Z axis (suitable for 2D/UI arrow that faces "up" at 0°)
+        arrow.localEulerAngles = new Vector3(0f, 0f, zAngle);
+    }
+
     public bool StartMission(GameObject passenger)
     {
         if (missionRunning)
