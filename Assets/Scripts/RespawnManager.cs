@@ -156,11 +156,16 @@ public class RespawnManager : MonoBehaviour
             // Reset health
             hudManager.currentHealth = hudManager.maxHealth;
             
-            // Reconnect explosion reference if needed
+            // Reconnect explosion reference - always update it since the old one was destroyed
             ForceExplosion explosion = currentCar.GetComponent<ForceExplosion>();
-            if (explosion != null && hudManager.explosion != explosion)
+            if (explosion != null)
             {
                 hudManager.explosion = explosion;
+                Debug.Log("[RESPAWN] Reconnected explosion reference to new car");
+            }
+            else
+            {
+                Debug.LogWarning("[RESPAWN] No ForceExplosion component found on respawned car! Explosion will not work.");
             }
         }
         

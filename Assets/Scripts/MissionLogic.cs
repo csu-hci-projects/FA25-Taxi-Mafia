@@ -139,4 +139,41 @@ public class MissionLogic : MonoBehaviour
             moneyText.color = Color.white; // Reset to white if money is positive
         }
     }
+
+    public void CancelMission()
+    {
+        if (!missionRunning) return;
+
+        Debug.Log("[RESPAWN] Cancelling mission due to player death");
+        
+        // Stop the timer
+        if (timerController != null)
+        {
+            timerController.StopTimer();
+        }
+        
+        // Clear mission text
+        if (missionText != null)
+        {
+            missionText.text = "";
+        }
+        
+        // Deactivate all mission endzones
+        if (missionEndzoneOrganizer != null)
+        {
+            missionEndzoneOrganizer.DeactivateAllEndzones();
+        }
+        
+        // Reset passenger if there is one
+        if (currentPassenger != null)
+        {
+            // Restore passenger to starting position
+            currentPassenger.transform.position = startingPassengerPosition;
+            currentPassenger.transform.rotation = startingPassengerRotation;
+            SetPassengerVisibility(true);
+            currentPassenger = null;
+        }
+        
+        missionRunning = false;
+    }
 }

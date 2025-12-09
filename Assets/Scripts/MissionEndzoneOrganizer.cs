@@ -19,4 +19,16 @@ public class MissionEndzoneOrganizer : MonoBehaviour
         if (missionEndzones == null || missionEndzones.Count == 0) return null;
         return missionEndzones[Random.Range(0, missionEndzones.Count)];
     }
+
+    public void DeactivateAllEndzones()
+    {
+        if (missionEndzones == null) return;
+        foreach (GameObject endzone in missionEndzones)
+        {
+            if (endzone != null)
+            {
+                endzone.SetActive(false);
+            }
+        }
+    }
 }

@@ -55,9 +55,35 @@ public class HUDManager : MonoBehaviour
     {
       currentHealth = 0;
 
+      // Cancel any ongoing mission
+      MissionLogic missionLogic = FindAnyObjectByType<MissionLogic>();
+      if (missionLogic != null)
+      {
+          missionLogic.CancelMission();
+      }
+
       // EXPLODE THE CAR DIRECTLY
+      // Try to get explosion from HUDManager reference first
       if (explosion != null)
+      {
           explosion.Explode();
+      }
+      else
+      {
+          // Fallback: try to get explosion directly from the car via targetRb
+          if (targetRb != null)
+          {
+              ForceExplosion carExplosion = targetRb.GetComponent<ForceExplosion>();
+              if (carExplosion != null)
+              {
+                  carExplosion.Explode();
+              }
+              else
+              {
+                  Debug.LogWarning("[RESPAWN] No ForceExplosion found on car! Cannot explode.");
+              }
+          }
+      }
 
       RespawnManager respawnManager = FindAnyObjectByType<RespawnManager>();
       if (respawnManager != null)
