@@ -6,6 +6,7 @@ using UnityEngine.InputSystem.Controls;
 public class MissionLogic : MonoBehaviour
 {
     public TextMeshProUGUI moneyText;
+    public TextMeshProUGUI moneyTextMenu;
 
     [SerializeField] MissionEndzoneOrganizer missionEndzoneOrganizer;
     GameObject currentPassenger;
@@ -192,16 +193,19 @@ public class MissionLogic : MonoBehaviour
     {
         if (moneyText == null) return;
 
-        moneyText.text = currentMoney.ToString() + "$";
+        moneyText.text = "$" + currentMoney.ToString();
+        moneyTextMenu.text = "$" + currentMoney.ToString();
         
         // Change color to red if money is less than zero
         if (currentMoney < 0)
         {
             moneyText.color = Color.red;
+            moneyTextMenu.color = Color.red;
         }
         else
         {
             moneyText.color = Color.white; // Reset to white if money is positive
+            moneyTextMenu.color = Color.white;
         }
     }
 }
