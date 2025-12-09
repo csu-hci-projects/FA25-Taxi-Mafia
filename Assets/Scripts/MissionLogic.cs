@@ -23,6 +23,9 @@ public class MissionLogic : MonoBehaviour
     public Transform arrow;  // The arrow indicator
     public GameObject car;
 
+    public AudioSource enterCarSound;
+    public AudioSource exitCarSound;
+
     void Update()
     {
         var maybeEndzonePos = missionEndzoneOrganizer.GetActiveEndzonePosition();
@@ -81,6 +84,11 @@ public class MissionLogic : MonoBehaviour
             startingPassengerRotation = passenger.transform.rotation;
             missionEndzoneOrganizer.GetRandomMissionEndzone().SetActive(true);
             missionRunning = true;
+            if (enterCarSound != null)
+            {
+                enterCarSound.loop = false;
+                enterCarSound.Play();
+            }
             return true;
         }
 
@@ -99,6 +107,11 @@ public class MissionLogic : MonoBehaviour
         currentPassenger.transform.rotation = other.transform.rotation * Quaternion.Euler(0f, 90f, 0f);
         if (currentPassenger != null)
         {
+            if (exitCarSound != null)
+            {
+                exitCarSound.loop = false;
+                exitCarSound.Play();
+            }
             Vector3 dir = currentPassenger.transform.forward.normalized;
             // Move passenger outwards a bit so the model isn't inside of the car.
             currentPassenger.transform.position += dir * 1f;
@@ -168,13 +181,13 @@ public class MissionLogic : MonoBehaviour
         if (!missionRunning) return;
 
         Debug.Log("[RESPAWN] Cancelling mission due to player death");
-        
+
         // Deactivate all mission endzones
         if (missionEndzoneOrganizer != null)
         {
             missionEndzoneOrganizer.DeactivateAllEndzones();
         }
-        
+
         // Reset passenger if there is one
         if (currentPassenger != null)
         {
@@ -184,7 +197,7 @@ public class MissionLogic : MonoBehaviour
             SetPassengerVisibility(true);
             currentPassenger = null;
         }
-        
+
         missionRunning = false;
     }
 
@@ -193,7 +206,7 @@ public class MissionLogic : MonoBehaviour
         if (moneyText == null) return;
 
         moneyText.text = currentMoney.ToString() + "$";
-        
+
         // Change color to red if money is less than zero
         if (currentMoney < 0)
         {
