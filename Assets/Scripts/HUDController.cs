@@ -55,9 +55,23 @@ public class HUDManager : MonoBehaviour
     {
       currentHealth = 0;
 
+      // Cancel any ongoing mission
+      MissionLogic missionLogic = FindAnyObjectByType<MissionLogic>();
+      if (missionLogic != null)
+      {
+          missionLogic.CancelMission();
+      }
+
       // EXPLODE THE CAR DIRECTLY
       if (explosion != null)
           explosion.Explode();
+
+      // Notify RespawnManager about death
+      RespawnManager respawnManager = FindAnyObjectByType<RespawnManager>();
+      if (respawnManager != null)
+      {
+          respawnManager.OnPlayerDeath();
+      }
     }
   }
 }
