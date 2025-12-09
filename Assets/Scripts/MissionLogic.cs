@@ -5,9 +5,6 @@ using UnityEngine.InputSystem.Controls;
 
 public class MissionLogic : MonoBehaviour
 {
-
-    public TimerController timerController;
-    public TextMeshProUGUI missionText;
     public TextMeshProUGUI moneyText;
 
     [SerializeField] MissionEndzoneOrganizer missionEndzoneOrganizer;
@@ -83,9 +80,6 @@ public class MissionLogic : MonoBehaviour
             startingPassengerPosition = passenger.transform.position;
             startingPassengerRotation = passenger.transform.rotation;
             missionEndzoneOrganizer.GetRandomMissionEndzone().SetActive(true);
-            timerController.StopTimer();
-            timerController.StartTimer();
-            missionText.text = "To the liquor sto'!";
             missionRunning = true;
             return true;
         }
@@ -123,12 +117,10 @@ public class MissionLogic : MonoBehaviour
 
             animatorControllerDriver.CrossfadeTo("Idle", 0.1f, 0);
 
-            timerController.PauseTimer();
             missionRunning = false;
-            missionText.text = "";
             int missionMoney = Random.Range(100, 500);
             currentMoney += missionMoney;
-            moneyText.text = currentMoney.ToString() + "$";
+            UpdateMoneyDisplay();
             // Restore passenger transform to the saved starting position/rotation
             currentPassenger.transform.position = startingPassengerPosition;
             currentPassenger.transform.rotation = startingPassengerRotation;
@@ -157,6 +149,59 @@ public class MissionLogic : MonoBehaviour
         {
             var em = ps.emission;
             em.enabled = visible;
+        }
+    }
+
+    public int GetMoney()
+    {
+        return currentMoney;
+    }
+
+    public void SetMoney(int amount)
+    {
+        currentMoney = amount;
+        UpdateMoneyDisplay();
+    }
+
+    public void CancelMission()
+    {
+        if (!missionRunning) return;
+
+        Debug.Log("[RESPAWN] Cancelling mission due to player death");
+        
+        // Deactivate all mission endzones
+        if (missionEndzoneOrganizer != null)
+        {
+            missionEndzoneOrganizer.DeactivateAllEndzones();
+        }
+        
+        // Reset passenger if there is one
+        if (currentPassenger != null)
+        {
+            // Restore passenger to starting position
+            currentPassenger.transform.position = startingPassengerPosition;
+            currentPassenger.transform.rotation = startingPassengerRotation;
+            SetPassengerVisibility(true);
+            currentPassenger = null;
+        }
+        
+        missionRunning = false;
+    }
+
+    private void UpdateMoneyDisplay()
+    {
+        if (moneyText == null) return;
+
+        moneyText.text = currentMoney.ToString() + "$";
+        
+        // Change color to red if money is less than zero
+        if (currentMoney < 0)
+        {
+            moneyText.color = Color.red;
+        }
+        else
+        {
+            moneyText.color = Color.white; // Reset to white if money is positive
         }
     }
 }
