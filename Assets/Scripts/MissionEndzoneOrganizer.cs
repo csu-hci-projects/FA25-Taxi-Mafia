@@ -36,4 +36,16 @@ public class MissionEndzoneOrganizer : MonoBehaviour
 
         return null;
     }
+
+    public void DeactivateAllEndzones()
+    {
+        if (missionEndzones == null) return;
+        foreach (GameObject endzone in missionEndzones)
+        {
+            if (endzone != null)
+            {
+                endzone.SetActive(false);
+            }
+        }
+    }
 }

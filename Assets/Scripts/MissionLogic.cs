@@ -128,7 +128,7 @@ public class MissionLogic : MonoBehaviour
             missionText.text = "";
             int missionMoney = Random.Range(100, 500);
             currentMoney += missionMoney;
-            moneyText.text = currentMoney.ToString() + "$";
+            UpdateMoneyDisplay();
             // Restore passenger transform to the saved starting position/rotation
             currentPassenger.transform.position = startingPassengerPosition;
             currentPassenger.transform.rotation = startingPassengerRotation;
@@ -157,6 +157,71 @@ public class MissionLogic : MonoBehaviour
         {
             var em = ps.emission;
             em.enabled = visible;
+        }
+    }
+
+    public int GetMoney()
+    {
+        return currentMoney;
+    }
+
+    public void SetMoney(int amount)
+    {
+        currentMoney = amount;
+        UpdateMoneyDisplay();
+    }
+
+    public void CancelMission()
+    {
+        if (!missionRunning) return;
+
+        Debug.Log("[RESPAWN] Cancelling mission due to player death");
+        
+        // Stop the timer
+        if (timerController != null)
+        {
+            timerController.StopTimer();
+        }
+        
+        // Clear mission text
+        if (missionText != null)
+        {
+            missionText.text = "";
+        }
+        
+        // Deactivate all mission endzones
+        if (missionEndzoneOrganizer != null)
+        {
+            missionEndzoneOrganizer.DeactivateAllEndzones();
+        }
+        
+        // Reset passenger if there is one
+        if (currentPassenger != null)
+        {
+            // Restore passenger to starting position
+            currentPassenger.transform.position = startingPassengerPosition;
+            currentPassenger.transform.rotation = startingPassengerRotation;
+            SetPassengerVisibility(true);
+            currentPassenger = null;
+        }
+        
+        missionRunning = false;
+    }
+
+    private void UpdateMoneyDisplay()
+    {
+        if (moneyText == null) return;
+
+        moneyText.text = currentMoney.ToString() + "$";
+        
+        // Change color to red if money is less than zero
+        if (currentMoney < 0)
+        {
+            moneyText.color = Color.red;
+        }
+        else
+        {
+            moneyText.color = Color.white; // Reset to white if money is positive
         }
     }
 }
