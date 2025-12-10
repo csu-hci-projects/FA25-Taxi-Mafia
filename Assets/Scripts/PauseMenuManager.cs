@@ -9,10 +9,21 @@ public class PauseMenuManager : MonoBehaviour
     public GameObject girlNPCIcon;
     public GameObject bossNPCIcon;
     public GameObject demonNPCIcon;
+    public GameObject galacticNPCIcon;
+    public GameObject bearNPCIcon;
+    public GameObject mysteriousNPCIcon;
+    public GameObject chineseNPCIcon;
+    public GameObject cultistNPCIcon;
     public GameObject endZone1;
     public GameObject endZone2;
 
     public GameObject endZone3;
+    public GameObject endZone4;
+    public GameObject endZone5;
+
+    public GameObject endZone6;
+    public GameObject endZone7;
+
 
     private bool isPaused = false;
 
@@ -25,9 +36,18 @@ public class PauseMenuManager : MonoBehaviour
             girlNPCIcon.SetActive(false);
             bossNPCIcon.SetActive(false);
             demonNPCIcon.SetActive(false);
+            bearNPCIcon.SetActive(false);
+            galacticNPCIcon.SetActive(false);
+            mysteriousNPCIcon.SetActive(false);
+            chineseNPCIcon.SetActive(false);
+            cultistNPCIcon.SetActive(false);
             endZone1.SetActive(false);
             endZone2.SetActive(false);
             endZone3.SetActive(false);
+            endZone4.SetActive(false);
+            endZone5.SetActive(false);
+            endZone6.SetActive(false);
+            endZone7.SetActive(false);
         }
     }
 
@@ -55,9 +75,18 @@ public class PauseMenuManager : MonoBehaviour
             girlNPCIcon.SetActive(true);
             bossNPCIcon.SetActive(true);
             demonNPCIcon.SetActive(true);
+            bearNPCIcon.SetActive(true);
+            galacticNPCIcon.SetActive(true);
+            mysteriousNPCIcon.SetActive(true);
+            chineseNPCIcon.SetActive(true);
+            cultistNPCIcon.SetActive(true);
             endZone1.SetActive(true);
             endZone2.SetActive(true);
             endZone3.SetActive(true);
+            endZone4.SetActive(true);
+            endZone5.SetActive(true);
+            endZone6.SetActive(true);
+            endZone7.SetActive(true);
         }
         Time.timeScale = 0f;
         isPaused = true;
@@ -75,9 +104,18 @@ public class PauseMenuManager : MonoBehaviour
             girlNPCIcon.SetActive(false);
             bossNPCIcon.SetActive(false);
             demonNPCIcon.SetActive(false);
+            bearNPCIcon.SetActive(false);
+            galacticNPCIcon.SetActive(false);
+            mysteriousNPCIcon.SetActive(false);
+            chineseNPCIcon.SetActive(false);
+            cultistNPCIcon.SetActive(false);
             endZone1.SetActive(false);
             endZone2.SetActive(false);
             endZone3.SetActive(false);
+            endZone4.SetActive(false);
+            endZone5.SetActive(false);
+            endZone6.SetActive(false);
+            endZone7.SetActive(false);
         }
         Time.timeScale = 1f;
         isPaused = false;
