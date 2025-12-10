@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5829100188553750549}
   - component: {fileID: 355710427293320202}
   - component: {fileID: 4996872424368100416}
+  - component: {fileID: 5799404587182273742}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -145,12 +146,51 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5256841377275371563}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01f818c9251c01b969e18ce5013e30b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 2.22, z: -4.54}
-  target: {fileID: 0}
-  translateSpeed: 4
-  rotationSpeed: 6
+  reverseMode: 1
+  carTransform: {fileID: 0}
+  carController: {fileID: 0}
+  distance: 6
+  height: 2
+  smoothSpeed: 5
+  pitch: 10
+  lookAtOffset: {x: 0, y: 1, z: 0}
+  tiltAngle: 5
+  pitchAccelFactor: 2
+  shakeIntensity: 0.2
+  shakeSpeed: 10
+  lookSpeed: 2
+  maxLookAngle: 70
+--- !u!114 &5799404587182273742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5256841377275371563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ac424182f08d41f69434d65a4906485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseMenuContainer: {fileID: 0}
+  taxiIcon: {fileID: 0}
+  girlNPCIcon: {fileID: 0}
+  bossNPCIcon: {fileID: 0}
+  demonNPCIcon: {fileID: 0}
+  galacticNPCIcon: {fileID: 0}
+  bearNPCIcon: {fileID: 0}
+  mysteriousNPCIcon: {fileID: 0}
+  chineseNPCIcon: {fileID: 0}
+  cultistNPCIcon: {fileID: 0}
+  endZone1: {fileID: 0}
+  endZone2: {fileID: 0}
+  endZone3: {fileID: 0}
+  endZone4: {fileID: 0}
+  endZone5: {fileID: 0}
+  endZone6: {fileID: 0}
+  endZone7: {fileID: 0}
