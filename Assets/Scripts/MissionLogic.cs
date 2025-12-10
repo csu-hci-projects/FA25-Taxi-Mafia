@@ -208,4 +208,16 @@ public class MissionLogic : MonoBehaviour
             moneyTextMenu.color = Color.white;
         }
     }
+
+    public void PurchaseCamaro()
+    {
+        currentMoney -= 800;
+        UpdateMoneyDisplay();
+    }
+
+    public void PurchaseTaxi()
+    {
+        currentMoney -= 200;
+        UpdateMoneyDisplay();
+    }
 }
