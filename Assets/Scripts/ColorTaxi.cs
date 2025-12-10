@@ -9,11 +9,13 @@ public class ColorTaxi : MonoBehaviour
     public Material redMaterial;
     public Material blueMaterial;
     public Material yellowMaterial;
+    public Material copMaterial;
 
     [Header("Costs")]
     public int redCost = 100;
-    public int blueCost = 150;
-    public int yellowCost = 200;
+    public int blueCost = 200;
+    public int yellowCost = 50;
+    public int copCost = 300;
 
     [Header("Money System")]
     public MissionLogic missionLogic;  // <-- reference your existing money script
@@ -38,6 +40,11 @@ public class ColorTaxi : MonoBehaviour
     public void ChangeToYellow()
     {
         TryChangeColor(yellowMaterial, yellowCost);
+    }
+
+    public void ChangeToCop()
+    {
+        TryChangeColor(copMaterial, copCost);
     }
 
     private void TryChangeColor(Material newMaterial, int cost)
