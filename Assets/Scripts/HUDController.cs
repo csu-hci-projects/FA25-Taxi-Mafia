@@ -14,6 +14,11 @@ public class HUDManager : MonoBehaviour
   float healthBarFullWidth;
 
   public ForceExplosion explosion;
+  
+  [Header("Smoke Effect")]
+  public GameObject smokePrefab;
+  public float smokeSpawnOffset = 2f; // Distance in front of car to spawn smoke
+  private bool smokeSpawned = false;
 
   void Awake()
   {
@@ -51,6 +56,13 @@ public class HUDManager : MonoBehaviour
   {
     currentHealth -= amount;
 
+    // Spawn smoke when health reaches 1/4 or below (and hasn't been spawned yet)
+    if (!smokeSpawned && currentHealth <= maxHealth * 0.25f && targetRb != null && smokePrefab != null)
+    {
+      SpawnSmoke();
+      smokeSpawned = true;
+    }
+
     if (currentHealth <= 0)
     {
       currentHealth = 0;
@@ -73,5 +85,19 @@ public class HUDManager : MonoBehaviour
           respawnManager.OnPlayerDeath();
       }
     }
+  }
+  
+  private void SpawnSmoke()
+  {
+    if (targetRb == null || smokePrefab == null) return;
+    
+    // Calculate position at the front of the car
+    Vector3 frontPosition = targetRb.transform.position + targetRb.transform.forward * smokeSpawnOffset;
+    
+    // Spawn the smoke prefab
+    GameObject smokeInstance = Instantiate(smokePrefab, frontPosition, targetRb.transform.rotation);
+    
+    // Make the smoke a child of the car so it follows it
+    smokeInstance.transform.SetParent(targetRb.transform);
   }
 }
