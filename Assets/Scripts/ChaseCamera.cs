@@ -10,7 +10,7 @@ public class ChaseCamera : MonoBehaviour
     public float mouseSensitivity = 4f;
     public float minY = -20f;
     public float maxY = 60f;
-    public float defaultPitch = 10f;   // fallback pitch when not looking
+    public float defaultPitch = 10f;   // default chase angle
     public float resetSpeed = 6f;      // how fast we return to default when RMB released
     
     float yaw;
@@ -22,8 +22,6 @@ public class ChaseCamera : MonoBehaviour
     public Vector3 followOffset = new Vector3(0, 2f, -6f);
 
     private Rigidbody targetRigidbody;
-    private Vector3 velocity = Vector3.zero;
-    private float verticalVelocity; // for damping vertical bob
 
     void Start()
     {
@@ -61,35 +59,36 @@ public class ChaseCamera : MonoBehaviour
 
         pitch = Mathf.Clamp(pitch, minY, maxY);
 
-        // --- GET SMOOTH CAR POSITION ---
+        // --- FOLLOW CAR POSITION SMOOTHLY ---
         // Use rigidbody position if available (respects interpolation), otherwise use transform
         Vector3 targetPosition = targetRigidbody != null ? targetRigidbody.position : target.position;
-
-        // Lightly damp vertical changes to reduce bobbing
-        float verticalDamp = 1f - Mathf.Exp(-followSpeed * 0.5f * Time.deltaTime);
-        targetPosition.y = Mathf.Lerp(transform.position.y, targetPosition.y, verticalDamp);
-
-        // Use SmoothDamp for jitter-free movement (better than Lerp for physics-based objects)
-        transform.position = Vector3.SmoothDamp(
+        
+        // Simple exponential smoothing - works well and is stable
+        float smoothFactor = 1f - Mathf.Exp(-followSpeed * Time.deltaTime);
+        transform.position = Vector3.Lerp(
             transform.position,
             targetPosition,
-            ref velocity,
-            1f / followSpeed,
-            Mathf.Infinity,
-            Time.deltaTime
+            smoothFactor
         );
 
         // --- ROTATE PIVOT RELATIVE TO CAR'S ROTATION ---
-        // Get car's forward direction and apply mouse offset
-        float carYaw = target.eulerAngles.y;
-        float finalYaw = carYaw + yaw; // yaw is relative offset
+        // Get car's rotation - use rigidbody if available for smoother rotation tracking
+        float carYaw;
+        if (targetRigidbody != null)
+        {
+            carYaw = targetRigidbody.rotation.eulerAngles.y;
+        }
+        else
+        {
+            carYaw = target.eulerAngles.y;
+        }
         
+        float finalYaw = carYaw + yaw; // yaw is relative offset
         Quaternion targetRotation = Quaternion.Euler(pitch, finalYaw, 0);
         
         // Smoothly rotate the pivot
         if (pivot != null)
         {
-            // Use exponential smoothing for smooth rotation
             float rotationSmoothFactor = 1f - Mathf.Exp(-rotationSpeed * Time.deltaTime);
             pivot.rotation = Quaternion.Slerp(
                 pivot.rotation,

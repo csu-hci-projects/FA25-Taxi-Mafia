@@ -35,6 +35,14 @@ public class CarController : MonoBehaviour
     public float turnSensitivity = 0.75f;
     public float maxSteerAngle = 45.0f;
 
+    [Header("GTA-Style Handling")]
+    [Tooltip("How much rear grip is reduced when handbrake is active (0-1)")]
+    public float handbrakeGripReduction = 0.3f;
+    [Tooltip("Speed at which steering becomes less sensitive (km/h)")]
+    public float steeringSpeedThreshold = 80f;
+    [Tooltip("Minimum steering angle at high speeds (multiplier)")]
+    public float minSteeringAtSpeed = 0.4f;
+
     public Vector3 _centerOfMass;
 
     public List<Wheel> wheels;
@@ -64,6 +72,8 @@ public class CarController : MonoBehaviour
     private float previousSteerInput = 0f;
     public bool lookBack = false;
     bool autoReverse = false;
+    private bool handbrakeActive = false;
+    private float[] originalSidewaysStiffness = new float[4]; // Store original friction values
 
 
     [Header("Audio")]
@@ -85,12 +95,13 @@ public class CarController : MonoBehaviour
         carRb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         carRb.centerOfMass = _centerOfMass;        // tweak Y lower & slightly rear for stability
 
-        foreach (var wheel in wheels)
+        // Store original friction values for handbrake system
+        for (int i = 0; i < wheels.Count; i++)
         {
-            WheelFrictionCurve forwardFriction = wheel.wheelCollider.forwardFriction;
-            WheelFrictionCurve sidewaysFriction = wheel.wheelCollider.sidewaysFriction;
+            WheelFrictionCurve forwardFriction = wheels[i].wheelCollider.forwardFriction;
+            WheelFrictionCurve sidewaysFriction = wheels[i].wheelCollider.sidewaysFriction;
 
-            if (wheel.axel == Axel.Front)
+            if (wheels[i].axel == Axel.Front)
             {
                 forwardFriction.stiffness = 2.5f;
                 sidewaysFriction.stiffness = 3.0f;  // front = more grip
@@ -101,8 +112,11 @@ public class CarController : MonoBehaviour
                 sidewaysFriction.stiffness = 2.5f;  // rear slightly lower for controlled drift
             }
 
-            wheel.wheelCollider.forwardFriction = forwardFriction;
-            wheel.wheelCollider.sidewaysFriction = sidewaysFriction;
+            wheels[i].wheelCollider.forwardFriction = forwardFriction;
+            wheels[i].wheelCollider.sidewaysFriction = sidewaysFriction;
+            
+            // Store original sideways stiffness for handbrake system
+            originalSidewaysStiffness[i] = sidewaysFriction.stiffness;
         }
         // carLights = GetComponent<CarLights>();
     }
@@ -261,22 +275,68 @@ void Move()
     float totalTorque = engineTorque * torqueFactor * throttleInputSmooth;
 
     float currentSpeed = carRb.linearVelocity.magnitude;
+    Vector3 localVel = carRb.transform.InverseTransformDirection(carRb.linearVelocity);
+    float forwardSpeed = localVel.z; // positive = forward, negative = reverse
 
-    // Reverse logic
-    if (moveInput < -0.1f && currentSpeed < 1.0f) reversing = true;
-    else if (moveInput > 0.1f) reversing = false;
+    // Enhanced reverse logic for J-turns
+    // Allow reverse when:
+    // 1. Moving backward (negative forward speed) OR
+    // 2. Nearly stopped and pressing reverse
+    // 3. Handbrake allows easier transition during slides
+    if (moveInput < -0.1f)
+    {
+        // If we're already moving backward, stay in reverse
+        // Or if we're slow/stopped, allow reverse
+        // Or if handbrake is active (during J-turn), allow reverse transition
+        if (forwardSpeed < 0.5f || currentSpeed < 2.0f || handbrakeActive)
+        {
+            reversing = true;
+        }
+    }
+    // Switch to forward when:
+    // 1. Moving forward (positive forward speed) OR
+    // 2. Pressing forward and not in heavy reverse
+    else if (moveInput > 0.1f)
+    {
+        if (forwardSpeed > -0.5f || currentSpeed < 2.0f || handbrakeActive)
+        {
+            reversing = false;
+        }
+    }
 
     foreach (var wheel in wheels)
     {
         if (wheel.axel == Axel.Rear)
         {
-            float appliedTorque = reversing ? moveInput * engineTorque : totalTorque * gearRatio / drivenWheels;
+            float appliedTorque;
+            
+            if (reversing)
+            {
+                // Reverse torque - allow full power in reverse for J-turns
+                // Use absolute value since moveInput is negative in reverse
+                float reverseTorque = Mathf.Abs(moveInput) * engineTorque;
+                // Boost reverse torque slightly for better reverse J-turn control
+                if (handbrakeActive)
+                {
+                    reverseTorque *= 1.2f; // Extra power during reverse J-turn
+                }
+                appliedTorque = -reverseTorque; // Negative for reverse
+            }
+            else
+            {
+                appliedTorque = totalTorque * gearRatio / drivenWheels;
+            }
 
-            // --- Drift helper ---
-            Vector3 localVel = carRb.transform.InverseTransformDirection(carRb.linearVelocity);
-            float sideSlip = Mathf.Abs(localVel.x);
-            float slipFactor = Mathf.Clamp01(1f - (sideSlip / 5f)); // reduces torque when sliding sideways
-            appliedTorque *= slipFactor;
+            // --- GTA-style drift helper ---
+            // Only reduce torque significantly when handbrake is active
+            // Don't reduce in reverse during J-turns
+            if (!handbrakeActive && !reversing)
+            {
+                Vector3 localVal = carRb.transform.InverseTransformDirection(carRb.linearVelocity);
+                float sideSlip = Mathf.Abs(localVal.x);
+                float slipFactor = Mathf.Clamp01(1f - (sideSlip / 8f)); // less aggressive reduction for normal driving
+                appliedTorque *= slipFactor;
+            }
 
             wheel.wheelCollider.motorTorque = appliedTorque;
         }
@@ -310,12 +370,26 @@ void Steer()
 {
     float speed = carRb.linearVelocity.magnitude * 3.6f; // km/h
 
-    // Reduce steering at high speeds
-    float speedFactor = Mathf.Clamp01(speed / 60f);
-    float maxAngle = Mathf.Lerp(maxSteerAngle, maxSteerAngle * 0.4f, speedFactor);
+    // GTA-style: Reduce steering at high speeds but keep it responsive
+    // In reverse, steering should be more responsive for J-turns
+    float speedFactor = Mathf.Clamp01(speed / steeringSpeedThreshold);
+    float maxAngle = Mathf.Lerp(maxSteerAngle, maxSteerAngle * minSteeringAtSpeed, speedFactor);
+    
+    // Boost steering in reverse for better J-turn control
+    if (reversing)
+    {
+        maxAngle *= 1.2f; // 20% more steering angle in reverse
+    }
 
-    // Smooth input
-    float smoothSteer = Mathf.Lerp(previousSteerInput, steerInput, Time.fixedDeltaTime * 5f);
+    // Smooth input - faster response when handbrake is active for J-turns
+    float steerSmoothSpeed = handbrakeActive ? 8f : 5f;
+    // Even faster in reverse with handbrake for reverse J-turns
+    if (reversing && handbrakeActive)
+    {
+        steerSmoothSpeed = 10f;
+    }
+    
+    float smoothSteer = Mathf.Lerp(previousSteerInput, steerInput, Time.fixedDeltaTime * steerSmoothSpeed);
     previousSteerInput = smoothSteer;
 
     foreach (var wheel in wheels)
@@ -327,10 +401,14 @@ void Steer()
         }
     }
 
-    // Lateral stabilization to reduce twitching
-    Vector3 localVel = carRb.transform.InverseTransformDirection(carRb.linearVelocity);
-    float oversteerFactor = Mathf.Clamp01(Mathf.Abs(localVel.x) / 5f);
-    carRb.angularVelocity *= (1f - 0.3f * oversteerFactor); // dampens rapid rotation at high side slip
+    // Reduced stabilization when handbrake is active to allow controlled slides
+    // Also reduce in reverse for better J-turn rotation
+    if (!handbrakeActive && !reversing)
+    {
+        Vector3 localVel = carRb.transform.InverseTransformDirection(carRb.linearVelocity);
+        float oversteerFactor = Mathf.Clamp01(Mathf.Abs(localVel.x) / 5f);
+        carRb.angularVelocity *= (1f - 0.3f * oversteerFactor); // dampens rapid rotation at high side slip
+    }
 }
 
 
@@ -356,13 +434,42 @@ void Steer()
 
     void HandBrake()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            foreach (var wheel in wheels)
-                if (wheel.axel == Axel.Rear)
-                    wheel.wheelCollider.brakeTorque = brakeAcceleration * 4500f;
-        }
+        bool handbrakePressed = Input.GetKey(KeyCode.LeftShift);
+        handbrakeActive = handbrakePressed;
 
+        if (handbrakePressed)
+        {
+            // Apply brake torque to rear wheels and reduce friction for sliding
+            for (int i = 0; i < wheels.Count; i++)
+            {
+                if (wheels[i].axel == Axel.Rear)
+                {
+                    wheels[i].wheelCollider.brakeTorque = brakeAcceleration * 4500f;
+                    
+                    // Reduce rear wheel friction for sliding (GTA-style)
+                    WheelFrictionCurve sideFriction = wheels[i].wheelCollider.sidewaysFriction;
+                    float originalStiffness = originalSidewaysStiffness[i];
+                    sideFriction.stiffness = originalStiffness * handbrakeGripReduction;
+                    wheels[i].wheelCollider.sidewaysFriction = sideFriction;
+                }
+            }
+        }
+        else
+        {
+            // Restore normal friction when handbrake is released
+            for (int i = 0; i < wheels.Count; i++)
+            {
+                if (wheels[i].axel == Axel.Rear)
+                {
+                    wheels[i].wheelCollider.brakeTorque = 0f;
+                    
+                    // Restore original friction
+                    WheelFrictionCurve sideFriction = wheels[i].wheelCollider.sidewaysFriction;
+                    sideFriction.stiffness = originalSidewaysStiffness[i];
+                    wheels[i].wheelCollider.sidewaysFriction = sideFriction;
+                }
+            }
+        }
     }
 
     void AnimateWheels()
