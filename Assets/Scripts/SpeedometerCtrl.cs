@@ -23,7 +23,7 @@ public class SpeedometerCtrl : MonoBehaviour
 
     void Update()
     {
-        needlePivot.eulerAngles = new Vector3(0, 0, GetSpeedRotation(target.velocity.magnitude * 2.23693629f, maxSpeed)); //Rotates the needle using the method we created above, reading from our target rigidbody and multiplying it to convert it to a miles per hour measure
+        needlePivot.eulerAngles = new Vector3(0, 0, GetSpeedRotation(target.linearVelocity.magnitude * 2.23693629f, maxSpeed)); //Rotates the needle using the method we created above, reading from our target rigidbody and multiplying it to convert it to a miles per hour measure
     }
 
     void CreateSpeedLabels(float maxSpeed)
